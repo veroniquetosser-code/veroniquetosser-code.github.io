@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Tour du monde en famille</h1>
+    <p>Distance parcourue : 12 480 km</p>
+    <p>Objectif : 40 075 km</p>
+    <p>Il reste : <span id="reste"></span> km</p>
+    <p>Il reste : <span id="reste"></span> km</p>
+    <progress id="barre" max="40075" value="0"></progress>
+    <p><span id="pourcent"></span> % du tour du monde</p>
+
+  <script>
+      let objectif = 40075;
+
+      async function charger() {
+        let reponse = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTUZi3CsGzOGS_VeA1APDKwrq1ZZrDc5tTmNPydoZSbWz4HrOvfCFll0hE7upi2GC5fsGyVdqBn6BiC/pub?output=csv");
+        let texte = await reponse.text();
+        let parcouru = Number(texte);
+
+        let reste = objectif - parcouru;
+        document.getElementById("reste").textContent = reste;
+        document.getElementById("barre").value = parcouru;
+        document.getElementById("pourcent").textContent = Math.round(parcouru / objectif * 100);
+      }
+
+      charger();
+    </script>
+  </body>
+</html>
