@@ -117,9 +117,8 @@
         document.getElementById("distanceRestante").textContent = distanceRestante;
         document.getElementById("barre").value = totalKm;
         document.getElementById("pourcent").textContent = Math.round(totalKm / 40075 * 100);
-      }
 
-      let html = "";
+              let html = "";
         for (let i = 0; i < etapes.length; i++) {
           let classe = "avenir";
           let marque = "";
@@ -134,6 +133,9 @@
           html = html + "<div class='etape " + classe + "'>" + etapes[i].ville + " (" + etapes[i].km + " km)" + marque + "</div>";
         }
         document.getElementById("listeEtapes").innerHTML = html;
+      }
+
+
       charger();
     </script>
   </body>
