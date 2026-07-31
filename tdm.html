@@ -75,28 +75,39 @@
         color: #999999;
         margin-top: 4px;
       }
+
+      .indic-1 { border-top: 4px solid #27ae60; }
+      .indic-2 { border-top: 4px solid #e67e22; }
+      .indic-3 { border-top: 4px solid #2980b9; }
+      .indic-4 { border-top: 4px solid #8e44ad; }
+
+      .indic-1 .valeur { color: #27ae60; }
+      .indic-2 .valeur { color: #e67e22; }
+      .indic-3 .valeur { color: #2980b9; }
+      .indic-4 .valeur { color: #8e44ad; }
+      
     </style>
   </head>
   <body>
     <h1>Tour du monde en famille</h1>
 
 <div class="indicateurs">
-      <div class="indic">
+      <div class="indic indic-1">
         <div class="label">Distance parcourue</div>
         <div class="valeur"><span id="totalKm"></span> km</div>
         <div class="detail"><span id="pourcent"></span> % du tour</div>
       </div>
-      <div class="indic">
+      <div class="indic indic-2">
         <div class="label">Km restants</div>
         <div class="valeur"><span id="kmRestants"></span> km</div>
         <div class="detail">jusqu'à Paris</div>
       </div>
-      <div class="indic">
+      <div class="indic indic-3">
         <div class="label">Rythme moyen</div>
         <div class="valeur"><span id="kmParSemaine"></span></div>
         <div class="detail">km / semaine</div>
       </div>
-      <div class="indic">
+      <div class="indic indic-4">
         <div class="label">Semaines restantes</div>
         <div class="valeur"><span id="semainesRestantes"></span></div>
         <div class="detail">au rythme actuel</div>
