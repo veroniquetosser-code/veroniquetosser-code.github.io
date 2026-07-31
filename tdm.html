@@ -3,6 +3,10 @@
   <body>
     <h1>Tour du monde en famille</h1>
     <p>Distance parcourue : <span id="totalKm"></span> km</p>
+    
+    <progress id="barre" max="40075" value="0"></progress>
+    <p><span id="pourcent"></span> % du tour du monde</p>
+    
     <p>Dernière étape franchie : <span id="etapeFranchie"></span></p>
     <p>Prochaine étape : <span id="prochaine"></span></p>
     <p>Il reste <span id="distanceRestante"></span> km avant d'y arriver</p>
@@ -55,6 +59,8 @@
         document.getElementById("etapeFranchie").textContent = etapeFranchie.ville;
         document.getElementById("prochaine").textContent = prochaineEtape.ville;
         document.getElementById("distanceRestante").textContent = distanceRestante;
+        document.getElementById("barre").value = totalKm;
+        document.getElementById("pourcent").textContent = Math.round(totalKm / 40075 * 100);
       }
 
       charger();
