@@ -60,6 +60,12 @@
       <h2>Le parcours</h2>
       <div id="listeEtapes"></div>
     </div>
+
+    <div class="carte">
+      <p>Semaines écoulées : <span id="semainesEcoulees"></span></p>
+      <p>Rythme moyen : <span id="kmParSemaine"></span> km / semaine</p>
+      <p>Semaines restantes estimées : <span id="semainesRestantes"></span></p>
+    </div>
     
     <script>
       let facteur = 0.0008;
@@ -94,6 +100,23 @@
 
         let totalKm = Math.round(totalPas * facteur);
 
+        let semainesVues = [];
+        for (let i = 1; i < lignes.length; i++) {
+          let colonnes = lignes[i].split(",");
+          let annee = colonnes[1];
+          let semaine = colonnes[0];
+          let cle = annee + "-" + semaine;
+          if (semainesVues.includes(cle) === false) {
+            semainesVues.push(cle);
+          }
+        }
+        let semainesEcoulees = semainesVues.length;
+
+        let kmParSemaine = Math.round(totalKm / semainesEcoulees);
+
+        let kmRestants = 40075 - totalKm;
+        let semainesRestantes = Math.round(kmRestants / kmParSemaine);
+
         let indexActuelle = 0;
         for (let i = 0; i < etapes.length; i++) {
           if (totalKm >= etapes[i].km) {
@@ -108,6 +131,9 @@
         document.getElementById("totalKm").textContent = totalKm.toLocaleString("fr-FR");
         document.getElementById("barre").value = totalKm;
         document.getElementById("pourcent").textContent = Math.round(totalKm / 40075 * 100);
+        document.getElementById("semainesEcoulees").textContent = semainesEcoulees;
+        document.getElementById("kmParSemaine").textContent = kmParSemaine.toLocaleString("fr-FR");
+        document.getElementById("semainesRestantes").textContent = semainesRestantes;
 
               let html = "";
         for (let i = 0; i < etapes.length; i++) {
