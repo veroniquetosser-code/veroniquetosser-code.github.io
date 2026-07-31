@@ -1,15 +1,49 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f0e1;
+        color: #333333;
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+
+      h1 {
+        color: #2c3e50;
+        text-align: center;
+      }
+
+      .carte {
+        background-color: #ffffff;
+        border-radius: 12px;
+        padding: 20px 30px;
+        margin: 20px 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      }
+
+      progress {
+        width: 100%;
+        height: 24px;
+      }
+    </style>
+  </head>
   <body>
     <h1>Tour du monde en famille</h1>
-    <p>Distance parcourue : <span id="totalKm"></span> km</p>
-    
-    <progress id="barre" max="40075" value="0"></progress>
-    <p><span id="pourcent"></span> % du tour du monde</p>
-    
-    <p>Dernière étape franchie : <span id="etapeFranchie"></span></p>
-    <p>Prochaine étape : <span id="prochaine"></span></p>
-    <p>Il reste <span id="distanceRestante"></span> km avant d'y arriver</p>
+
+    <div class="carte">
+      <p>Distance parcourue : <span id="totalKm"></span> km</p>
+      <progress id="barre" max="40075" value="0"></progress>
+      <p><span id="pourcent"></span> % du tour du monde</p>
+    </div>
+
+    <div class="carte">
+      <p>Dernière étape franchie : <span id="etapeFranchie"></span></p>
+      <p>Prochaine étape : <span id="prochaine"></span></p>
+      <p>Il reste <span id="distanceRestante"></span> km avant d'y arriver</p>
+    </div>
 
     <script>
       let facteur = 0.0008;
