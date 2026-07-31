@@ -2,16 +2,33 @@
 <html>
   <body>
     <h1>Tour du monde en famille</h1>
-    <p>Total de pas du groupe : <span id="totalPas"></span></p>
-    <p>Soit environ : <span id="totalKm"></span> km</p>
+    <p>Distance parcourue : <span id="totalKm"></span> km</p>
+    <p>Dernière étape franchie : <span id="etapeFranchie"></span></p>
+    <p>Prochaine étape : <span id="prochaine"></span></p>
+    <p>Il reste <span id="distanceRestante"></span> km avant d'y arriver</p>
 
     <script>
       let facteur = 0.0008;
 
+      let etapes = [
+        { ville: "Paris", km: 0 },
+        { ville: "Le Caire", km: 3200 },
+        { ville: "Nairobi", km: 6800 },
+        { ville: "Le Cap", km: 10500 },
+        { ville: "Mumbai", km: 14800 },
+        { ville: "Bangkok", km: 18200 },
+        { ville: "Singapour", km: 20400 },
+        { ville: "Tokyo", km: 23500 },
+        { ville: "Sydney", km: 27800 },
+        { ville: "Honolulu", km: 31200 },
+        { ville: "Los Angeles", km: 34100 },
+        { ville: "New York", km: 37200 },
+        { ville: "Paris (retour)", km: 40075 }
+      ];
+
       async function charger() {
         let reponse = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTUZi3CsGzOGS_VeA1APDKwrq1ZZrDc5tTmNPydoZSbWz4HrOvfCFll0hE7upi2GC5fsGyVdqBn6BiC/pub?output=csv");
         let texte = await reponse.text();
-
         let lignes = texte.split("\n");
 
         let totalPas = 0;
@@ -23,8 +40,21 @@
 
         let totalKm = Math.round(totalPas * facteur);
 
-        document.getElementById("totalPas").textContent = totalPas;
+        let indexActuelle = 0;
+        for (let i = 0; i < etapes.length; i++) {
+          if (totalKm >= etapes[i].km) {
+            indexActuelle = i;
+          }
+        }
+
+        let etapeFranchie = etapes[indexActuelle];
+        let prochaineEtape = etapes[indexActuelle + 1];
+        let distanceRestante = prochaineEtape.km - totalKm;
+
         document.getElementById("totalKm").textContent = totalKm;
+        document.getElementById("etapeFranchie").textContent = etapeFranchie.ville;
+        document.getElementById("prochaine").textContent = prochaineEtape.ville;
+        document.getElementById("distanceRestante").textContent = distanceRestante;
       }
 
       charger();
