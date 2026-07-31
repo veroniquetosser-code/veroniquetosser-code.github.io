@@ -6,7 +6,7 @@
         font-family: Arial, sans-serif;
         background-color: #f5f0e1;
         color: #333333;
-        max-width: 700px;
+        max-width: 900px;
         margin: 40px auto;
         padding: 0 20px;
       }
@@ -103,10 +103,6 @@
       </div>
     </div>
 
-    <div class="carte">
-      <progress id="barre" max="40075" value="0"></progress>
-    </div>
-
        <div class="carte">
       <h2>Le parcours</h2>
       <div id="listeEtapes"></div>
@@ -174,7 +170,6 @@
         let distanceRestante = prochaineEtape.km - totalKm;
 
         document.getElementById("totalKm").textContent = totalKm.toLocaleString("fr-FR");
-        document.getElementById("barre").value = totalKm;
         document.getElementById("pourcent").textContent = Math.round(totalKm / 40075 * 100);
         document.getElementById("kmParSemaine").textContent = kmParSemaine.toLocaleString("fr-FR");
         document.getElementById("semainesRestantes").textContent = semainesRestantes;
