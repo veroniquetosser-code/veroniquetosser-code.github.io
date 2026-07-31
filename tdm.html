@@ -111,10 +111,10 @@
         let prochaineEtape = etapes[indexActuelle + 1];
         let distanceRestante = prochaineEtape.km - totalKm;
 
-        document.getElementById("totalKm").textContent = totalKm;
+        document.getElementById("totalKm").textContent = totalKm.toLocaleString("fr-FR");
         document.getElementById("etapeFranchie").textContent = etapeFranchie.ville;
         document.getElementById("prochaine").textContent = prochaineEtape.ville;
-        document.getElementById("distanceRestante").textContent = distanceRestante;
+        document.getElementById("distanceRestante").textContent = distanceRestante.toLocaleString("fr-FR");
         document.getElementById("barre").value = totalKm;
         document.getElementById("pourcent").textContent = Math.round(totalKm / 40075 * 100);
 
@@ -130,7 +130,7 @@
             classe = "actuelle";
             marque = " ← vous êtes ici";
           }
-          html = html + "<div class='etape " + classe + "'>" + etapes[i].ville + " (" + etapes[i].km + " km)" + marque + "</div>";
+      html = html + "<div class='etape " + classe + "'>" + etapes[i].ville + " (" + etapes[i].km.toLocaleString("fr-FR") + " km)" + marque + "</div>";
         }
         document.getElementById("listeEtapes").innerHTML = html;
       }
