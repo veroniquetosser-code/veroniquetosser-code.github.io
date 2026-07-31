@@ -44,27 +44,72 @@
       .avenir {
         color: #999999;
       }
-      
+
+      .indicateurs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+      .indic {
+        background-color: #ffffff;
+        border-radius: 12px;
+        padding: 16px 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        flex: 1;
+        min-width: 140px;
+      }
+      .indic .label {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #999999;
+        margin-bottom: 6px;
+      }
+      .indic .valeur {
+        font-size: 26px;
+        font-weight: bold;
+        color: #2c3e50;
+      }
+      .indic .detail {
+        font-size: 13px;
+        color: #999999;
+        margin-top: 4px;
+      }
     </style>
   </head>
   <body>
     <h1>Tour du monde en famille</h1>
 
-    <div class="carte">
-      <p>Distance parcourue : <span id="totalKm"></span> km</p>
-      <progress id="barre" max="40075" value="0"></progress>
-      <p><span id="pourcent"></span> % du tour du monde</p>
+<div class="indicateurs">
+      <div class="indic">
+        <div class="label">Distance parcourue</div>
+        <div class="valeur"><span id="totalKm"></span> km</div>
+        <div class="detail"><span id="pourcent"></span> % du tour</div>
+      </div>
+      <div class="indic">
+        <div class="label">Km restants</div>
+        <div class="valeur"><span id="kmRestants"></span> km</div>
+        <div class="detail">au rythme actuel</div>
+      </div>
+      <div class="indic">
+        <div class="label">Rythme moyen</div>
+        <div class="valeur"><span id="kmParSemaine"></span></div>
+        <div class="detail">km / semaine</div>
+      </div>
+      <div class="indic">
+        <div class="label">Semaines restantes</div>
+        <div class="valeur"><span id="semainesRestantes"></span></div>
+        <div class="detail">estimation</div>
+      </div>
     </div>
 
     <div class="carte">
+      <progress id="barre" max="40075" value="0"></progress>
+    </div>
+
+       <div class="carte">
       <h2>Le parcours</h2>
       <div id="listeEtapes"></div>
-    </div>
-
-    <div class="carte">
-      <p>Semaines écoulées : <span id="semainesEcoulees"></span></p>
-      <p>Rythme moyen : <span id="kmParSemaine"></span> km / semaine</p>
-      <p>Semaines restantes estimées : <span id="semainesRestantes"></span></p>
     </div>
     
     <script>
@@ -131,9 +176,9 @@
         document.getElementById("totalKm").textContent = totalKm.toLocaleString("fr-FR");
         document.getElementById("barre").value = totalKm;
         document.getElementById("pourcent").textContent = Math.round(totalKm / 40075 * 100);
-        document.getElementById("semainesEcoulees").textContent = semainesEcoulees;
         document.getElementById("kmParSemaine").textContent = kmParSemaine.toLocaleString("fr-FR");
         document.getElementById("semainesRestantes").textContent = semainesRestantes;
+        document.getElementById("kmRestants").textContent = kmRestants.toLocaleString("fr-FR");
 
               let html = "";
         for (let i = 0; i < etapes.length; i++) {
