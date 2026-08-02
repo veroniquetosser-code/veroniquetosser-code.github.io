@@ -2,7 +2,14 @@
 <html>
   <head>
     <style>
+  /* ========================================= */
+  /* STYLES (apparence de la page)             */
+  /* ========================================= */
+    
       body {
+        
+  /* Paramètres généraux de la page */
+        
         font-family: Arial, sans-serif;
         background-color: #f5f0e1;
         color: #333333;
@@ -10,12 +17,16 @@
         margin: 40px auto;
         padding: 0 20px;
       }
-
+      
+  /* h1 = titre principal */
+      
       h1 {
         color: #2c3e50;
         text-align: center;
       }
 
+  /* apparence des cartes blanches */
+      
       .carte {
         background-color: #ffffff;
         border-radius: 12px;
@@ -23,16 +34,14 @@
         margin: 20px 0;
         box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       }
-
-      progress {
-        width: 100%;
-        height: 24px;
-      }
-
+      
+/* Style liste des étapes du TDM */
+      
       #listeEtapes {
         position: relative;
         padding-left: 28px;
       }
+      
       #listeEtapes::before {
         content: "";
         position: absolute;
@@ -42,11 +51,13 @@
         width: 2px;
         background-color: #ddd;
       }
+      
       .etape {
         position: relative;
         padding: 6px 0;
         font-size: 14px;
       }
+      
       .etape::before {
         content: "";
         position: absolute;
@@ -79,6 +90,8 @@
         color: #aaa;
       }
 
+/* Style des 4 blocs d'indicateurs */
+      
       .indicateurs {
         display: flex;
         flex-wrap: wrap;
@@ -122,38 +135,56 @@
       
     </style>
   </head>
+  
   <body>
+
+<!-- ========================================= -->
+<!-- CONTENU DE LA PAGE                        -->
+<!-- ========================================= -->
+
     <h1>Tour du monde en famille</h1>
 
 <div class="indicateurs">
+  
       <div class="indic indic-1">
         <div class="label">Distance parcourue</div>
         <div class="valeur"><span id="totalKm"></span> km</div>
         <div class="detail"><span id="pourcent"></span> % du tour</div>
       </div>
+  
       <div class="indic indic-2">
         <div class="label">Km restants</div>
         <div class="valeur"><span id="kmRestants"></span> km</div>
         <div class="detail">jusqu'à Paris</div>
       </div>
+  
       <div class="indic indic-3">
         <div class="label">Rythme moyen</div>
         <div class="valeur"><span id="kmParSemaine"></span></div>
         <div class="detail">km / semaine</div>
       </div>
+  
       <div class="indic indic-4">
         <div class="label">Semaines restantes</div>
         <div class="valeur"><span id="semainesRestantes"></span></div>
         <div class="detail">au rythme actuel</div>
       </div>
-    </div>
+
+</div>
 
        <div class="carte">
+         
       <h2>Le parcours</h2>
+         
       <div id="listeEtapes"></div>
-    </div>
+       </div>
     
     <script>
+
+  // ===========================================
+  // CALCULS ET AFFICHAGE
+  // ===========================================
+      
       let facteur = 0.0008;
 
       let etapes = [
@@ -172,18 +203,24 @@
         { ville: "Paris (retour)", km: 40075 }
       ];
 
+  // Liaison avec le google sheet
+
       async function charger() {
         let reponse = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTUZi3CsGzOGS_VeA1APDKwrq1ZZrDc5tTmNPydoZSbWz4HrOvfCFll0hE7upi2GC5fsGyVdqBn6BiC/pub?output=csv");
         let texte = await reponse.text();
         let lignes = texte.split("\n");
 
+// Lecture total des pas
+        
         let totalPas = 0;
         for (let i = 1; i < lignes.length; i++) {
           let colonnes = lignes[i].split(",");
           let pas = Number(colonnes[3]);
           totalPas = totalPas + pas;
         }
-
+        
+// Calcul des autres indicateurs
+        
         let totalKm = Math.round(totalPas * facteur);
 
         let semainesVues = [];
@@ -214,12 +251,33 @@
         let prochaineEtape = etapes[indexActuelle + 1];
         let distanceRestante = prochaineEtape.km - totalKm;
 
+// --- Total de pas par participant ---
+        let totaux = {};
+        for (let i = 1; i < lignes.length; i++) {
+          let colonnes = lignes[i].split(",");
+          let nom = colonnes[2];
+          let pas = Number(colonnes[3]);
+
+          if (totaux[nom] === undefined) {
+            totaux[nom] = 0;
+          }
+          totaux[nom] = totaux[nom] + pas;
+        }
+
+        // ligne temp
+
+        console.log(totaux);
+
+// Pont entre calcul et affichage
+        
         document.getElementById("totalKm").textContent = totalKm.toLocaleString("fr-FR");
         document.getElementById("pourcent").textContent = Math.round(totalKm / 40075 * 100);
         document.getElementById("kmParSemaine").textContent = kmParSemaine.toLocaleString("fr-FR");
         document.getElementById("semainesRestantes").textContent = semainesRestantes;
         document.getElementById("kmRestants").textContent = kmRestants.toLocaleString("fr-FR");
 
+// Affichage des étapes
+        
               let html = "";
         for (let i = 0; i < etapes.length; i++) {
           let classe = "avenir";
