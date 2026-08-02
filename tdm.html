@@ -264,9 +264,18 @@
           totaux[nom] = totaux[nom] + pas;
         }
 
-        // ligne temp
+// --- Transformer l'objet en liste triable ---
+        let classement = [];
+        for (let nom in totaux) {
+          classement.push({ nom: nom, pas: totaux[nom] });
+        }
 
-        console.log(totaux);
+// --- Trier du plus grand au plus petit ---
+        classement.sort(function(a, b) {
+          return b.pas - a.pas;
+        });
+
+        console.log(classement);
 
 // Pont entre calcul et affichage
         
