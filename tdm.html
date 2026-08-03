@@ -367,6 +367,24 @@
         }
         document.getElementById("classementSemaine").innerHTML = htmlSemaine;
 
+// --- Total de pas par semaine (tous participants) ---
+        let totauxParSemaine = {};
+        for (let i = 1; i < lignes.length; i++) {
+          let colonnes = lignes[i].split(",");
+          let annee = Number(colonnes[1]);
+          let semaine = Number(colonnes[0]);
+          let pas = Number(colonnes[3]);
+
+          let cle = annee * 100 + semaine;
+
+          if (totauxParSemaine[cle] === undefined) {
+            totauxParSemaine[cle] = 0;
+          }
+          totauxParSemaine[cle] = totauxParSemaine[cle] + pas;
+        }
+
+        console.log(totauxParSemaine);
+
 // Pont entre calcul et affichage
         
         document.getElementById("totalKm").textContent = totalKm.toLocaleString("fr-FR");
