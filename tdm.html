@@ -327,7 +327,32 @@
           }
         }
 
-        console.log("Dernière semaine :", derniereSemaine, "/", derniereAnnee);
+// --- Classement de la dernière semaine ---
+        let totauxSemaine = {};
+        for (let i = 1; i < lignes.length; i++) {
+          let colonnes = lignes[i].split(",");
+          let annee = Number(colonnes[1]);
+          let semaine = Number(colonnes[0]);
+
+          if (annee === derniereAnnee && semaine === derniereSemaine) {
+            let nom = colonnes[2];
+            let pas = Number(colonnes[3]);
+            if (totauxSemaine[nom] === undefined) {
+              totauxSemaine[nom] = 0;
+            }
+            totauxSemaine[nom] = totauxSemaine[nom] + pas;
+          }
+        }
+
+        let classementSemaine = [];
+        for (let nom in totauxSemaine) {
+          classementSemaine.push({ nom: nom, pas: totauxSemaine[nom] });
+        }
+        classementSemaine.sort(function(a, b) {
+          return b.pas - a.pas;
+        });
+
+        console.log(classementSemaine);
 
 // Pont entre calcul et affichage
         
