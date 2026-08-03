@@ -311,6 +311,24 @@
         }
         document.getElementById("classement").innerHTML = htmlClassement;
 
+// --- Trouver la dernière semaine (année puis numéro) ---
+        let derniereAnnee = 0;
+        let derniereSemaine = 0;
+        for (let i = 1; i < lignes.length; i++) {
+          let colonnes = lignes[i].split(",");
+          let annee = Number(colonnes[1]);
+          let semaine = Number(colonnes[0]);
+          if (annee > derniereAnnee) {
+            derniereAnnee = annee;
+            derniereSemaine = semaine;
+          }
+          if (annee === derniereAnnee && semaine > derniereSemaine) {
+            derniereSemaine = semaine;
+          }
+        }
+
+        console.log("Dernière semaine :", derniereSemaine, "/", derniereAnnee);
+
 // Pont entre calcul et affichage
         
         document.getElementById("totalKm").textContent = totalKm.toLocaleString("fr-FR");
