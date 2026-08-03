@@ -199,6 +199,11 @@
          
       <div id="listeEtapes"></div>
        </div>
+
+    <div class="carte">
+      <h2>Classement de la semaine</h2>
+      <div id="classementSemaine"></div>
+    </div>
     
     <div class="carte">
       <h2>Classement des participants</h2>
@@ -352,7 +357,15 @@
           return b.pas - a.pas;
         });
 
-        console.log(classementSemaine);
+// --- Affichage du classement de la semaine ---
+        let htmlSemaine = "";
+        for (let i = 0; i < classementSemaine.length; i++) {
+          let rang = i + 1;
+          let personne = classementSemaine[i];
+          let km = Math.round(personne.pas * facteur);
+          htmlSemaine = htmlSemaine + "<div class='rang'><span class='position'>" + rang + "</span> <span class='nomP'>" + personne.nom + "</span> <span class='pasP'>" + personne.pas.toLocaleString("fr-FR") + " pas (" + km.toLocaleString("fr-FR") + " km)</span></div>";
+        }
+        document.getElementById("classementSemaine").innerHTML = htmlSemaine;
 
 // Pont entre calcul et affichage
         
