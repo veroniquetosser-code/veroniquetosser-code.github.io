@@ -153,6 +153,11 @@
         color: #666;
         font-size: 14px;
       }
+
+      .semaine-actuelle {
+        font-weight: bold;
+        color: #c0392b;
+      }
       
     </style>
   </head>
@@ -407,7 +412,13 @@
           let annee = (cle - semaine) / 100;
           let pas = totauxParSemaine[cle];
           let km = Math.round(pas * facteur);
-          htmlHisto = htmlHisto + "<div class='rang'><span class='nomP'>Semaine " + semaine + " (" + annee + ")</span> <span class='pasP'>" + pas.toLocaleString("fr-FR") + " pas (" + km.toLocaleString("fr-FR") + " km)</span></div>";
+
+          let classe = "";
+          if (i === cinqDernieres.length - 1) {
+            classe = "semaine-actuelle";
+          }
+
+          htmlHisto = htmlHisto + "<div class='rang " + classe + "'><span class='nomP'>Semaine " + semaine + " (" + annee + ")</span> <span class='pasP'>" + pas.toLocaleString("fr-FR") + " pas (" + km.toLocaleString("fr-FR") + " km)</span></div>";
         }
         document.getElementById("histo").innerHTML = htmlHisto;
 
