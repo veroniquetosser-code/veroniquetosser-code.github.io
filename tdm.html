@@ -204,6 +204,11 @@
       <h2>Classement de la semaine</h2>
       <div id="classementSemaine"></div>
     </div>
+
+    <div class="carte">
+      <h2>Les 5 dernières semaines</h2>
+      <div id="histo"></div>
+    </div>
     
     <div class="carte">
       <h2>Classement général</h2>
@@ -382,8 +387,29 @@
           }
           totauxParSemaine[cle] = totauxParSemaine[cle] + pas;
         }
+        
+// --- Garder les 5 dernières semaines ---
+        let clesSemaines = [];
+        for (let cle in totauxParSemaine) {
+          clesSemaines.push(Number(cle));
+        }
+        clesSemaines.sort(function(a, b) {
+          return a - b;
+        });
 
-        console.log(totauxParSemaine);
+        let cinqDernieres = clesSemaines.slice(-5);
+
+        // --- Affichage de l'historique ---
+        let htmlHisto = "";
+        for (let i = 0; i < cinqDernieres.length; i++) {
+          let cle = cinqDernieres[i];
+          let semaine = cle % 100;
+          let annee = (cle - semaine) / 100;
+          let pas = totauxParSemaine[cle];
+          let km = Math.round(pas * facteur);
+          htmlHisto = htmlHisto + "<div class='rang'><span class='nomP'>Semaine " + semaine + " (" + annee + ")</span> <span class='pasP'>" + pas.toLocaleString("fr-FR") + " pas (" + km.toLocaleString("fr-FR") + " km)</span></div>";
+        }
+        document.getElementById("histo").innerHTML = htmlHisto;
 
 // Pont entre calcul et affichage
         
