@@ -293,6 +293,19 @@ table {
         }
         return html;
       }
+
+// Fabrique les lignes du classement général (avec moyenne et record)
+      function tableauEnrichi(liste) {
+        let html = "";
+        for (let i = 0; i < liste.length; i++) {
+          let rang = i + 1;
+          let p = liste[i];
+          let km = Math.round(p.total * facteur);
+          let moyenne = Math.round(p.total / p.semaines);
+          html = html + "<tr><td>" + rang + "</td><td class='nomCol'>" + p.nom + "</td><td>" + km.toLocaleString("fr-FR") + " km</td><td>" + moyenne.toLocaleString("fr-FR") + " pas</td><td>" + p.record.toLocaleString("fr-FR") + " pas</td></tr>";
+        }
+        return html;
+      }
       
   // Liaison avec le google sheet
 
@@ -516,16 +529,7 @@ document.getElementById("classementSemaine").innerHTML = tableauSimple(classemen
         }
         document.getElementById("listeEtapes").innerHTML = html;
         
-let htmlGeneral = "";
-        for (let i = 0; i < classementGeneral.length; i++) {
-          let rang = i + 1;
-          let p = classementGeneral[i];
-          let km = Math.round(p.total * facteur);
-          let moyenne = Math.round(p.total / p.semaines);
-
-          htmlGeneral = htmlGeneral + "<tr><td>" + rang + "</td><td class='nomCol'>" + p.nom + "</td><td>" + km.toLocaleString("fr-FR") + " km</td><td>" + moyenne.toLocaleString("fr-FR") + " pas</td><td>" + p.record.toLocaleString("fr-FR") + " pas</td></tr>";
-        }
-        document.getElementById("classement").innerHTML = htmlGeneral;
+document.getElementById("classement").innerHTML = tableauEnrichi(classementGeneral);
         
       }
       charger();
