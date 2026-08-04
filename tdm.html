@@ -237,9 +237,14 @@ table {
       </table>
     </div>
 
-    <div class="carte">
+<div class="carte">
       <h2>Les 5 dernières semaines</h2>
-      <div id="histo"></div>
+      <table>
+        <thead>
+          <tr><th>Semaine</th><th>Distance</th></tr>
+        </thead>
+        <tbody id="histo"></tbody>
+      </table>
     </div>
     
 <div class="carte">
@@ -303,6 +308,26 @@ table {
           let km = Math.round(p.total * facteur);
           let moyenne = Math.round(p.total / p.semaines);
           html = html + "<tr><td>" + rang + "</td><td class='nomCol'>" + p.nom + "</td><td>" + km.toLocaleString("fr-FR") + " km</td><td>" + moyenne.toLocaleString("fr-FR") + " pas</td><td>" + p.record.toLocaleString("fr-FR") + " pas</td></tr>";
+        }
+        return html;
+      }
+
+// Fabrique les lignes de l'historique des semaines
+      function tableauHisto(liste) {
+        let html = "";
+        for (let i = 0; i < liste.length; i++) {
+          let cle = liste[i];
+          let semaine = cle % 100;
+          let annee = (cle - semaine) / 100;
+          let pas = totauxParSemaine[cle];
+          let km = Math.round(pas * facteur);
+
+          let classe = "";
+          if (i === liste.length - 1) {
+            classe = "semaine-actuelle";
+          }
+
+          html = html + "<tr class='" + classe + "'><td>Semaine " + semaine + " (" + annee + ")</td><td>" + km.toLocaleString("fr-FR") + " km</td></tr>";
         }
         return html;
       }
@@ -451,23 +476,8 @@ document.getElementById("classementSemaine").innerHTML = tableauSimple(classemen
 
         let cinqDernieres = clesSemaines.slice(-5);
 
-        // --- Affichage de l'historique ---
-        let htmlHisto = "";
-        for (let i = 0; i < cinqDernieres.length; i++) {
-          let cle = cinqDernieres[i];
-          let semaine = cle % 100;
-          let annee = (cle - semaine) / 100;
-          let pas = totauxParSemaine[cle];
-          let km = Math.round(pas * facteur);
-
-          let classe = "";
-          if (i === cinqDernieres.length - 1) {
-            classe = "semaine-actuelle";
-          }
-
-          htmlHisto = htmlHisto + "<div class='rang " + classe + "'><span class='nomP'>Semaine " + semaine + " (" + annee + ")</span> <span class='pasP'>" + pas.toLocaleString("fr-FR") + " pas (" + km.toLocaleString("fr-FR") + " km)</span></div>";
-        }
-        document.getElementById("histo").innerHTML = htmlHisto;
+// --- Affichage de l'historique ---
+document.getElementById("histo").innerHTML = tableauHisto(cinqDernieres);
 
 // --- Stats enrichies par participant ---
         let stats = {};
