@@ -229,7 +229,12 @@ table {
 
     <div class="carte">
       <h2>Classement de la semaine</h2>
-      <div id="classementSemaine"></div>
+      <table>
+        <thead>
+          <tr><th>#</th><th>Participant</th><th>Distance</th></tr>
+        </thead>
+        <tbody id="classementSemaine"></tbody>
+      </table>
     </div>
 
     <div class="carte">
@@ -277,6 +282,18 @@ table {
         { ville: "Paris (retour)", km: 40075 }
       ];
 
+// Fabrique les lignes d'un tableau de classement simple (rang, nom, km)
+      function tableauSimple(liste) {
+        let html = "";
+        for (let i = 0; i < liste.length; i++) {
+          let rang = i + 1;
+          let p = liste[i];
+          let km = Math.round(p.pas * facteur);
+          html = html + "<tr><td>" + rang + "</td><td class='nomCol'>" + p.nom + "</td><td>" + km.toLocaleString("fr-FR") + " km</td></tr>";
+        }
+        return html;
+      }
+      
   // Liaison avec le google sheet
 
       async function charger() {
@@ -392,14 +409,7 @@ table {
         });
 
 // --- Affichage du classement de la semaine ---
-        let htmlSemaine = "";
-        for (let i = 0; i < classementSemaine.length; i++) {
-          let rang = i + 1;
-          let personne = classementSemaine[i];
-          let km = Math.round(personne.pas * facteur);
-          htmlSemaine = htmlSemaine + "<div class='rang'><span class='position'>" + rang + "</span> <span class='nomP'>" + personne.nom + "</span> <span class='pasP'>" + personne.pas.toLocaleString("fr-FR") + " pas (" + km.toLocaleString("fr-FR") + " km)</span></div>";
-        }
-        document.getElementById("classementSemaine").innerHTML = htmlSemaine;
+document.getElementById("classementSemaine").innerHTML = tableauSimple(classementSemaine);
 
 // --- Total de pas par semaine (tous participants) ---
         let totauxParSemaine = {};
