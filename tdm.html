@@ -317,15 +317,6 @@
         });
 
 // --- Affichage du classement ---
-        let htmlClassement = "";
-        for (let i = 0; i < classement.length; i++) {
-          let rang = i + 1;
-          let personne = classement[i];
-          let km = Math.round(personne.pas * facteur);
-          htmlClassement = htmlClassement + "<div class='rang'><span class='position'>" + rang + "</span> <span class='nomP'>" + personne.nom + "</span> <span class='pasP'>" + personne.pas.toLocaleString("fr-FR") + " pas (" + km.toLocaleString("fr-FR") + " km)</span></div>";
-        }
-        document.getElementById("classement").innerHTML = htmlClassement;
-
 // --- Trouver la dernière semaine (année puis numéro) ---
         let derniereAnnee = 0;
         let derniereSemaine = 0;
@@ -442,6 +433,20 @@
 
         console.log(stats);
 
+// --- Classement général enrichi ---
+        let classementGeneral = [];
+        for (let nom in stats) {
+          classementGeneral.push({
+            nom: nom,
+            total: stats[nom].total,
+            semaines: stats[nom].semaines,
+            record: stats[nom].record
+          });
+        }
+        classementGeneral.sort(function(a, b) {
+          return b.total - a.total;
+        });
+
 // Pont entre calcul et affichage
         
         document.getElementById("totalKm").textContent = totalKm.toLocaleString("fr-FR");
@@ -469,6 +474,16 @@
         document.getElementById("listeEtapes").innerHTML = html;
       }
 
+let htmlGeneral = "";
+        for (let i = 0; i < classementGeneral.length; i++) {
+          let rang = i + 1;
+          let p = classementGeneral[i];
+          let km = Math.round(p.total * facteur);
+          let moyenne = Math.round(p.total / p.semaines);
+
+          htmlGeneral = htmlGeneral + "<div class='rang'><span class='position'>" + rang + "</span> <span class='nomP'>" + p.nom + "</span> <span class='pasP'>" + km.toLocaleString("fr-FR") + " km · moy. " + moyenne.toLocaleString("fr-FR") + " pas/sem · record " + p.record.toLocaleString("fr-FR") + "</span></div>";
+        }
+        document.getElementById("classement").innerHTML = htmlGeneral;
 
       charger();
     </script>
