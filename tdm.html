@@ -422,6 +422,26 @@
         }
         document.getElementById("histo").innerHTML = htmlHisto;
 
+// --- Stats enrichies par participant ---
+        let stats = {};
+        for (let i = 1; i < lignes.length; i++) {
+          let colonnes = lignes[i].split(",");
+          let nom = colonnes[2];
+          let pas = Number(colonnes[3]);
+
+          if (stats[nom] === undefined) {
+            stats[nom] = { total: 0, semaines: 0, record: 0 };
+          }
+
+          stats[nom].total = stats[nom].total + pas;
+          stats[nom].semaines = stats[nom].semaines + 1;
+          if (pas > stats[nom].record) {
+            stats[nom].record = pas;
+          }
+        }
+
+        console.log(stats);
+
 // Pont entre calcul et affichage
         
         document.getElementById("totalKm").textContent = totalKm.toLocaleString("fr-FR");
