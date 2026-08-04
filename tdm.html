@@ -472,7 +472,6 @@
       html = html + "<div class='etape " + classe + "'>" + etapes[i].ville + " (" + etapes[i].km.toLocaleString("fr-FR") + " km)" + marque + "</div>";
         }
         document.getElementById("listeEtapes").innerHTML = html;
-      }
 
 let htmlGeneral = "";
         for (let i = 0; i < classementGeneral.length; i++) {
@@ -484,7 +483,7 @@ let htmlGeneral = "";
           htmlGeneral = htmlGeneral + "<div class='rang'><span class='position'>" + rang + "</span> <span class='nomP'>" + p.nom + "</span> <span class='pasP'>" + km.toLocaleString("fr-FR") + " km · moy. " + moyenne.toLocaleString("fr-FR") + " pas/sem · record " + p.record.toLocaleString("fr-FR") + "</span></div>";
         }
         document.getElementById("classement").innerHTML = htmlGeneral;
-
+      }
       charger();
     </script>
   </body>
