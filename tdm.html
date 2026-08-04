@@ -313,7 +313,7 @@ table {
       }
 
 // Fabrique les lignes de l'historique des semaines
-      function tableauHisto(liste) {
+   function tableauHisto(liste, totauxParSemaine) {
         let html = "";
         for (let i = 0; i < liste.length; i++) {
           let cle = liste[i];
@@ -477,7 +477,7 @@ document.getElementById("classementSemaine").innerHTML = tableauSimple(classemen
         let cinqDernieres = clesSemaines.slice(-5);
 
 // --- Affichage de l'historique ---
-document.getElementById("histo").innerHTML = tableauHisto(cinqDernieres);
+document.getElementById("histo").innerHTML = tableauHisto(cinqDernieres, totauxParSemaine);
 
 // --- Stats enrichies par participant ---
         let stats = {};
